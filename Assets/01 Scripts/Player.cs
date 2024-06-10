@@ -10,22 +10,22 @@ public class Player : MonoBehaviour
     private bool detectedLeft;
     private bool detectedRight;
 
+    private bool onMove;
+
     [SerializeField] private ObjectSensor sensorG;
     [SerializeField] private ObjectSensor sensorLT;
     [SerializeField] private ObjectSensor sensorLB;
     [SerializeField] private ObjectSensor sensorRT;
     [SerializeField] private ObjectSensor sensorRB;
 
-    Vector2 angleLT;
-    Vector2 angleRT;
+    public Vector2 angleLT = new Vector2(-1, 1);
+    public Vector2 angleRT = new Vector2(1, 1);
 
     Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        angleLT = sensorLT.transform.position;
-        angleRT = sensorRT.transform.position;
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
             transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
         }
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && sensorG.dectected && !detectedLeft && !detectedRight)
+        if (Input.GetKeyDown(KeyCode.Space) && sensorG.dectected)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
