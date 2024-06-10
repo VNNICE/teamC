@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        onMove = true;
     }
 
     // Update is called once per frame
@@ -34,11 +35,11 @@ public class Player : MonoBehaviour
         DetectedOnRight();
         DetectedOnLeft();
         //Move
-        if (Input.GetKey(KeyCode.A) && !detectedLeft)
+        if (onMove && Input.GetKey(KeyCode.A) && !detectedLeft)
         {
             transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
         }
-        else if (Input.GetKey(KeyCode.D) && !detectedRight)
+        else if (onMove && Input.GetKey(KeyCode.D) && !detectedRight)
         {
             transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
         }
@@ -46,18 +47,26 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && sensorG.dectected)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }
+        }//Triangle Jump
         else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && detectedLeft && !detectedRight)
         {
-            rb.velocity = new Vector2(angleRT.x, angleRT.y) * jumpForce;
+            rb.velocity = angleRT * jumpForce;
+            StartCoroutine(WaitTriangleJump());
         }
         else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && !detectedLeft && detectedRight)
         {
-            rb.velocity = new Vector2(angleLT.x, angleLT.y) * jumpForce;
+            rb.velocity = angleLT * jumpForce;
+            StartCoroutine(WaitTriangleJump());
         }
     }
 
-    
+    IEnumerator WaitTriangleJump()
+    {
+        onMove = false;
+        yield return new WaitForSecondsRealtime(0.3f);
+        rb.velocity = Vector3.zero;
+        onMove = true;
+    }
 
     private void DetectedOnLeft() 
     {
