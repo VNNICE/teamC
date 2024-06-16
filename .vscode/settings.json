@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Action Ninja Game.sln"
+    "dotnet.defaultSolution": "teamC.sln"
 }
