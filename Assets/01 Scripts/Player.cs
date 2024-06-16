@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
+    GameController gameController;
     public float jumpForce = 10f;
     public float moveSpeed = 10f;
     private bool detectedLeft;
     private bool detectedRight;
-
     private bool onMove;
 
     [SerializeField] private ObjectSensor sensorG;
@@ -25,6 +26,15 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
+        if (gameController == null)
+        {
+            Debug.Log("Player: Cannot Find GameContorller");
+        }
+        else 
+        {
+            Debug.Log("Player: Successfully find GameContorller");
+        }
         rb = GetComponent<Rigidbody2D>();
         onMove = true;
     }
@@ -32,39 +42,54 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DetectedOnRight();
-        DetectedOnLeft();
-        //Move
-        if (onMove && Input.GetKey(KeyCode.A) && !detectedLeft)
+        if (gameController.onGame)
         {
-            transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+            DetectedOnRight();
+            DetectedOnLeft();
+            //Move
+            if (onMove && Input.GetKey(KeyCode.A) && !detectedLeft)
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+            }
+            else if (onMove && Input.GetKey(KeyCode.D) && !detectedRight)
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+                transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+            }
+            //Jump
+            if (Input.GetKeyDown(KeyCode.Space) && sensorG.dectected)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }//Triangle Jump
+            else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && detectedLeft && !detectedRight)
+            {
+                rb.velocity = angleRT * jumpForce;
+                StartCoroutine(WaitTriangleJump());
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && !detectedLeft && detectedRight)
+            {
+                rb.velocity = angleLT * jumpForce;
+                StartCoroutine(WaitTriangleJump());
+            }
         }
-        else if (onMove && Input.GetKey(KeyCode.D) && !detectedRight)
+        else if (!gameController.gameClear)
         {
-            transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+            this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            this.GetComponent<SpriteRenderer>().color = Color.red;
         }
-        //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && sensorG.dectected)
+        else if (gameController.gameClear)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        }//Triangle Jump
-        else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && detectedLeft && !detectedRight)
-        {
-            rb.velocity = angleRT * jumpForce;
-            StartCoroutine(WaitTriangleJump());
+            this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            this.GetComponent<SpriteRenderer>().color = Color.blue;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && !detectedLeft && detectedRight)
-        {
-            rb.velocity = angleLT * jumpForce;
-            StartCoroutine(WaitTriangleJump());
-        }
+
     }
 
     IEnumerator WaitTriangleJump()
     {
         onMove = false;
         yield return new WaitForSecondsRealtime(0.3f);
-        rb.velocity = Vector3.zero;
         onMove = true;
     }
 
