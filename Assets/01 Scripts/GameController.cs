@@ -9,14 +9,14 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    GameObject player;
-    GameObject enemy;
+    [SerializeField] GameObject player;
+    [SerializeField] GameObject enemy;
 
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI gameClearText;
     [SerializeField] Button restartButton;
 
-    TextMeshPro distanceText;
+    [SerializeField] TextMeshPro distanceText;
 
     float timer = 5f;
     bool blink = false;
@@ -29,8 +29,6 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<Player>().gameObject;
-        enemy = FindObjectOfType<Enemy>().gameObject;
         onGame = true;
         gameClearText.enabled = false;
         restartButton.gameObject.SetActive(false);
@@ -51,7 +49,7 @@ public class GameController : MonoBehaviour
             if (timer > 0 && timer <= 2 && !blink)
             {
                 blink = true;
-                StartCoroutine(Flashed());
+                StartCoroutine(Blinked());
             }
             else if (timer <= 0)
             {
@@ -71,7 +69,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    IEnumerator Flashed()
+    IEnumerator Blinked()
     {
         while (blink) 
         {
@@ -83,7 +81,6 @@ public class GameController : MonoBehaviour
 
     private void GetDistance()
     {
-        distanceText = enemy.GetComponentInChildren<TextMeshPro>();
         playerLocation[0] = (int)player.transform.position.x;
         playerLocation[1] = (int)player.transform.position.y;
 
@@ -126,6 +123,6 @@ public class GameController : MonoBehaviour
     public void RestartStage() 
     {
        UnityEngine.SceneManagement.Scene thisScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(thisScene.name);
+       SceneManager.LoadScene(thisScene.name);
     }
 }

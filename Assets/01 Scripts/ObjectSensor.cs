@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ObjectSensor : MonoBehaviour
 {
-    GameController gameController;
     public bool dectected;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         dectected = true;
     }

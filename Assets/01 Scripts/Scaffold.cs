@@ -5,25 +5,50 @@ using UnityEngine;
 
 public class Scaffold : MonoBehaviour
 {
-    private ObjectSensor sensor;
+
+    private ScaffoldSensor sensor;
+    private BoxCollider2D col;
+    private 
     // Start is called before the first frame update
     void Start()
     {
-        sensor = transform.Find("Detected").GetComponent<ObjectSensor>();
+        sensor = transform.GetChild(0).GetComponent<ScaffoldSensor>();
+        col = this.GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        col.isTrigger = false;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        col.isTrigger = true;
+    }
+    /*
+    private void FixedUpdate()
+    {
         if (sensor.dectected)
         {
-            StartCoroutine(WaitSec());
+            col.isTrigger = true;
+        }
+        else if (!sensor.dectected)
+        {
+            StartCoroutine(WaitAndDisableCollider());
+            //Invoke("WaitDisable", 1.0f);
         }
     }
-    IEnumerator WaitSec()
+    private IEnumerator WaitAndDisableCollider()
     {
-        this.GetComponent<BoxCollider2D>().isTrigger = true;
-        yield return new WaitForSecondsRealtime(1);
-        this.GetComponent<BoxCollider2D>().isTrigger = false;
+        yield return new WaitForSeconds(1.0f);
+        col.isTrigger = false;
     }
+    private void WaitDisable() 
+    {
+        col.isTrigger = false;
+    }*/
 }

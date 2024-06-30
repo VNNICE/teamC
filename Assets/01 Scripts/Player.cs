@@ -7,11 +7,14 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     GameController gameController;
-    public float jumpForce = 10f;
-    public float moveSpeed = 10f;
+    [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float triangleJumpForce = 5f;
+
     private bool detectedLeft;
     private bool detectedRight;
     private bool onMove;
+    private bool canTriangleJump;
 
     [SerializeField] private ObjectSensor sensorG;
     [SerializeField] private ObjectSensor sensorLT;
@@ -31,7 +34,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player: Cannot Find GameContorller");
         }
-        else 
+        else
         {
             Debug.Log("Player: Successfully find GameContorller");
         }
@@ -62,14 +65,14 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }//Triangle Jump
-            else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && detectedLeft && !detectedRight)
+            else if (canTriangleJump && Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && detectedLeft && !detectedRight)
             {
-                rb.velocity = angleRT * jumpForce;
+                rb.velocity = angleRT * triangleJumpForce;
                 StartCoroutine(WaitTriangleJump());
             }
-            else if (Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && !detectedLeft && detectedRight)
+            else if (canTriangleJump && Input.GetKeyDown(KeyCode.Space) && !sensorG.dectected && !detectedLeft && detectedRight)
             {
-                rb.velocity = angleLT * jumpForce;
+                rb.velocity = angleLT * triangleJumpForce;
                 StartCoroutine(WaitTriangleJump());
             }
         }
@@ -93,7 +96,7 @@ public class Player : MonoBehaviour
         onMove = true;
     }
 
-    private void DetectedOnLeft() 
+    private void DetectedOnLeft()
     {
         if (sensorLT.dectected && sensorLB.dectected)
         {
@@ -117,6 +120,20 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Right is outed!");
             detectedRight = false;
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            canTriangleJump = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision) 
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            canTriangleJump = false;
         }
     }
 
