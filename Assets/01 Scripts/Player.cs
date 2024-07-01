@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private bool detectedRight;
     private bool onMove;
     private bool canTriangleJump;
+    private bool onAir;
 
     [SerializeField] private ObjectSensor sensorG;
     [SerializeField] private ObjectSensor sensorLT;
@@ -22,8 +23,8 @@ public class Player : MonoBehaviour
     [SerializeField] private ObjectSensor sensorRT;
     [SerializeField] private ObjectSensor sensorRB;
 
-    public Vector2 angleLT = new Vector2(-1, 1);
-    public Vector2 angleRT = new Vector2(1, 1);
+    [SerializeField] private Vector2 angleLT = new Vector2(-2, 4);
+    [SerializeField] private Vector2 angleRT = new Vector2(2, 4);
 
     Rigidbody2D rb;
     // Start is called before the first frame update
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Player: Successfully find GameContorller");
         }
+        
         rb = GetComponent<Rigidbody2D>();
         onMove = true;
     }
@@ -45,6 +47,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (rb.velocity.y > 0 && sensorG.dectected) 
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
         if (gameController.onGame)
         {
             DetectedOnRight();
