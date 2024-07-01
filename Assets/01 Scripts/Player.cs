@@ -7,9 +7,9 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     GameController gameController;
-    [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float triangleJumpForce = 5f;
+    [SerializeField] private float jumpForce = 45f;
+    [SerializeField] private float moveSpeed = 30f;
+    [SerializeField] private float triangleJumpForce = 15f;
 
     private bool detectedLeft;
     private bool detectedRight;
@@ -17,19 +17,29 @@ public class Player : MonoBehaviour
     private bool canTriangleJump;
     private bool onAir;
 
-    [SerializeField] private ObjectSensor sensorG;
-    [SerializeField] private ObjectSensor sensorLT;
-    [SerializeField] private ObjectSensor sensorLB;
-    [SerializeField] private ObjectSensor sensorRT;
-    [SerializeField] private ObjectSensor sensorRB;
+    private ObjectSensor sensorG;
+    private ObjectSensor sensorLT;
+    private ObjectSensor sensorLB;
+    private ObjectSensor sensorRT;
+    private ObjectSensor sensorRB;
 
-    [SerializeField] private Vector2 angleLT = new Vector2(-2, 4);
-    [SerializeField] private Vector2 angleRT = new Vector2(2, 4);
+    [SerializeField] private Vector2 angleLT = new Vector2(-1, 3);
+    [SerializeField] private Vector2 angleRT = new Vector2(1, 3);
 
     Rigidbody2D rb;
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        
+    }
+
     void Start()
     {
+        sensorG = transform.FindChild("Sensor_G").GetComponent<ObjectSensor>();
+        sensorLT = transform.FindChild("Sensor_LT").GetComponent<ObjectSensor>();
+        sensorLB = transform.FindChild("Sensor_LB").GetComponent<ObjectSensor>();
+        sensorRT = transform.FindChild("Sensor_RT").GetComponent<ObjectSensor>();
+        sensorRB = transform.FindChild("Sensor_RB").GetComponent<ObjectSensor>();
+
         gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
         if (gameController == null)
         {
@@ -47,6 +57,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //éOäpîÚÇ—å„íÖínÇµÇΩèÍçávelocityÇèâä˙âª
         if (rb.velocity.y > 0 && sensorG.dectected) 
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -58,11 +69,13 @@ public class Player : MonoBehaviour
             //Move
             if (onMove && Input.GetKey(KeyCode.A) && !detectedLeft)
             {
+                //à⁄ìÆÇâüÇµÇΩéûvelocityÇèâä˙âª
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
             }
             else if (onMove && Input.GetKey(KeyCode.D) && !detectedRight)
             {
+                //à⁄ìÆÇâüÇµÇΩéûvelocityÇèâä˙âª
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
             }
