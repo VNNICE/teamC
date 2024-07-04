@@ -4,8 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Ground
   - Wall
+=======
+  - Enemy
+  - Wall
+  - Scaffold
+  - Ground
+>>>>>>> LEE
   layers:
   - Default
   - TransparentFX
