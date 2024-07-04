@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     private bool onGround;
     private bool canTriangleJump;
 
-    private ObjectSensor sensorB;
     private ObjectSensor sensorLT;
     private ObjectSensor sensorLB;
     private ObjectSensor sensorRT;
@@ -30,8 +29,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //Sensor Bottom, 足場を活性化させるため
-        sensorB = transform.Find("Sensor_B").GetComponent<ObjectSensor>();
         //SensorLeftTop, 左上
         sensorLT = transform.Find("Sensor_LT").GetComponent<ObjectSensor>();
         //LeftBottom, 左下

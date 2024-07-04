@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivatedAshiba : MonoBehaviour
+public class ActiveScaffold : MonoBehaviour
 {
-
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.isTrigger && collision.gameObject.CompareTag("Scaffold"))
