@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         //Sensor Bottom, 足場を活性化させるため
-        sensorB = transform.Find("Sensor_G").GetComponent<ObjectSensor>();
+        sensorB = transform.Find("Sensor_B").GetComponent<ObjectSensor>();
         //SensorLeftTop, 左上
         sensorLT = transform.Find("Sensor_LT").GetComponent<ObjectSensor>();
         //LeftBottom, 左下
