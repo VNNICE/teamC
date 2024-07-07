@@ -112,7 +112,7 @@ public class GameController : MonoBehaviour
                 onGame = false;
                 gameClearText.enabled = true;
                 gameClearText.text = "Game Over \n Restart: Space Key";
-                if (Input.GetKey(KeyCode.Space)) 
+                if (Input.GetKeyDown(KeyCode.Space)) 
                 {
                     RestartStage();
                 }
