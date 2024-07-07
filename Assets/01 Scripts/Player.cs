@@ -10,10 +10,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce = 45f;
     [SerializeField] private float moveSpeed = 30f;
     [SerializeField] private float triangleJumpForce = 15f;
+    Animator animator;
+    SpriteRenderer spriteRenderer;
+    AudioClip walkingSound;
 
     private bool detectedLeft;
     private bool detectedRight;
     private bool onMove;
+    private bool isMove;
     private bool onGround;
     private bool canTriangleJump;
 
@@ -29,6 +33,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         //SensorLeftTop, 左上
         sensorLT = transform.Find("Sensor_LT").GetComponent<ObjectSensor>();
         //LeftBottom, 左下
@@ -55,11 +61,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (rb.velocity.y > 0 && sensorG.dectected) 
-        {
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }*/
+        animator.SetBool("IsMove", isMove);
         if (gameController.onGame)
         {
             DetectedOnRight();
@@ -69,12 +71,20 @@ public class Player : MonoBehaviour
             {
                 //移動を押した時加速を初期化(三角飛び中など)
                 rb.velocity = new Vector2(0, rb.velocity.y);
+                spriteRenderer.flipX = false;
                 transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
+                isMove = true;
             }
             else if (onMove && Input.GetKey(KeyCode.D) && !detectedRight)
             {
                 rb.velocity = new Vector2(0, rb.velocity.y);
+                spriteRenderer.flipX = true;
                 transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
+                isMove = true;
+            }
+            else 
+            {
+                isMove = false;
             }
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && onGround)
