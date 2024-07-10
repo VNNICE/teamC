@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         //SensorLeftTop, 左上
         sensorLT = transform.Find("Sensor_LT").GetComponent<ObjectSensor>();
         //LeftBottom, 左下
@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
         sensorRB = transform.Find("Sensor_RB").GetComponent<ObjectSensor>();
 
         gameController = FindObjectOfType<GameController>().GetComponent<GameController>();
+        rb = GetComponent<Rigidbody2D>();
         if (gameController == null)
         {
             Debug.Log("Player: Cannot Find GameContorller");
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour
             Debug.Log("Player: Successfully find GameContorller");
         }
 
-        rb = GetComponent<Rigidbody2D>();
+        
         onMove = true;
     }
 
@@ -105,12 +106,12 @@ public class Player : MonoBehaviour
         else if (!gameController.gameClear)
         {
             this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            this.GetComponent<SpriteRenderer>().color = Color.red;
+            GetComponentInChildren<SpriteRenderer>().color = Color.red;
         }
         else if (gameController.gameClear)
         {
             this.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            this.GetComponent<SpriteRenderer>().color = Color.blue;
+            GetComponentInChildren<SpriteRenderer>().color = Color.blue;
         }
 
     }

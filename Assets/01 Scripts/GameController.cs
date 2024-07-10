@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] GameObject enemy;
+    [SerializeField] GameObject clearEffect;
 
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI gameClearText;
@@ -29,6 +30,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        clearEffect.SetActive(false);
         onGame = true;
         gameClearText.enabled = false;
         restartButton.gameObject.SetActive(false);
