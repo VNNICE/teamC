@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     GameController gameController;
     [SerializeField] private float jumpForce = 45f;
-    [SerializeField] private float moveSpeed = 30f;
+    [SerializeField] private float moveSpeed = 25f;
     [SerializeField] private float triangleJumpForce = 15f;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -87,6 +87,7 @@ public class Player : MonoBehaviour
             {
                 isMove = false;
             }
+
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && onGround)
             {
@@ -155,19 +156,36 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //足場か床に着いたとき止まらせるため（これがないと三角飛び後も滑ってしまう）
-        //Scaffoldは足場、足場だけの何かを作る可能性があるため分けています
+        //Scaffoldは足場、足場だけの何かを作る可能性があるため分けています -> stayに変えました
+        /*
+        Vector2 normal = collision.contacts[0].normal;
+        if (normal.y > 0) 
+        {
+            Debug.Log("Ground!");
+            rb.velocity = new Vector2(0, 0);
+        }*/
+        /*
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Scaffold"))
         {
             Debug.Log("Ground!");
             rb.velocity = new Vector2(0, 0);
-        }
+        }*/
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
+        Vector2 normal = collision.contacts[0].normal;
+        if (normal.y > 0)
+        {
+            Debug.Log("Ground!");
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+        
         if (collision.gameObject.tag == "Ground" || collision.gameObject.CompareTag("Scaffold"))
         {
             onGround = true;
+            //rb.velocity = new Vector2(0, rb.velocity.y);
         }
+
         //左右センサー感知だけではくっついてないのに三脚飛びができてしまうためCollisionを確認
         if (collision.gameObject.tag == "Wall")
         {
