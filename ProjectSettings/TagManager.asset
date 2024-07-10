@@ -4,15 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - Ground
-  - Wall
-=======
-  - Enemy
   - Wall
   - Scaffold
   - Ground
->>>>>>> LEE
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -20,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Object
   - 
   - 
   - 
