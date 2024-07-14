@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         //SensorLeftTop, 左上
         sensorLT = transform.Find("Sensor_LT").GetComponent<ObjectSensor>();
@@ -62,7 +62,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(rb.velocity.y);
         animator.SetBool("IsMove", isMove);
+        animator.SetBool("OnGround", onGround);
         if (gameController.onGame)
         {
             DetectedOnRight();

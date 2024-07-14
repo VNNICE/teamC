@@ -12,10 +12,9 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Object
   - Water
   - UI
-  - Object
   - 
   - 
   - 
@@ -30,6 +29,7 @@ TagManager:
   - 
   - 
   - 
+  - Wallpaper
   - 
   - 
   - 
@@ -42,6 +42,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Wallpaper
+    uniqueID: 3492818467
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Object
+    uniqueID: 1699486949
     locked: 0
