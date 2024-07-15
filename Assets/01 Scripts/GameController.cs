@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -24,12 +25,15 @@ public class GameController : MonoBehaviour
     public bool onGame;
     public bool gameClear;
 
+    private string jsonPath;
+
     int[] playerLocation = new int[2];
     int[] enemyLocation = new int[2];
 
     // Start is called before the first frame update
     void Start()
     {
+        jsonPath = Resources.Load<TextAsset>("ClearRecords").ToString();
         clearEffect.SetActive(false);
         onGame = true;
         gameClearText.enabled = false;
@@ -108,6 +112,10 @@ public class GameController : MonoBehaviour
             {
                 gameClearText.enabled = true;
                 gameClearText.text = "Clear";
+                clearEffect.SetActive(true);
+
+                WriteClearRecord();
+
             }
             else if (!gameClear)
             {
@@ -120,11 +128,14 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-
     }
+
     public void RestartStage() 
     {
        UnityEngine.SceneManagement.Scene thisScene = SceneManager.GetActiveScene();
        SceneManager.LoadScene(thisScene.name);
+    }
+    private void WriteClearRecord()
+    {
     }
 }

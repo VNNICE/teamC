@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
     GameController gameController;
-    [SerializeField] private float jumpForce = 45f;
-    [SerializeField] private float moveSpeed = 25f;
+    [SerializeField] private float jumpForce = 35f;
+    [SerializeField] private float moveSpeed = 20f;
     [SerializeField] private float triangleJumpForce = 15f;
     Animator animator;
     SpriteRenderer spriteRenderer;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private bool detectedLeft;
     private bool detectedRight;
     private bool onMove;
+    private bool onTriangleJump;
     private bool isMove;
     private bool onGround;
     private bool canTriangleJump;
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(SceneManager.GetActiveScene().name);
         animator = GetComponentInChildren<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         //SensorLeftTop, 左上
@@ -65,6 +68,8 @@ public class Player : MonoBehaviour
         Debug.Log(rb.velocity.y);
         animator.SetBool("IsMove", isMove);
         animator.SetBool("OnGround", onGround);
+        animator.SetFloat("VectorCheck", rb.velocity.y);
+        animator.SetBool("OnTriangleJump", onTriangleJump);
         if (gameController.onGame)
         {
             DetectedOnRight();
@@ -97,11 +102,13 @@ public class Player : MonoBehaviour
             }//Triangle Jump
             else if (canTriangleJump && Input.GetKeyDown(KeyCode.Space) && !onGround && detectedLeft && !detectedRight)
             {
+                //spriteRenderer.flipX = true;
                 rb.velocity = angleRT * triangleJumpForce;
                 StartCoroutine(WaitTriangleJump());
             }
             else if (canTriangleJump && Input.GetKeyDown(KeyCode.Space) && !onGround && !detectedLeft && detectedRight)
             {
+                //spriteRenderer.flipX = true;
                 rb.velocity = angleLT * triangleJumpForce;
                 StartCoroutine(WaitTriangleJump());
             }
@@ -122,9 +129,12 @@ public class Player : MonoBehaviour
     //三角飛び後すぐの方向転換を防ぐ
     IEnumerator WaitTriangleJump()
     {
-        onMove = false;
-        yield return new WaitForSecondsRealtime(0.3f);
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+        onMove = false; 
+        onTriangleJump = true;
+        yield return new WaitForSeconds(0.3f);
         onMove = true;
+        onTriangleJump = false;
     }
 
     //左上と左下を感知した時活性化、これにより左が完全に触れた時にだけ三角飛び可
