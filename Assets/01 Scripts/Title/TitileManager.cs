@@ -32,7 +32,7 @@ public class TitileManager : MonoBehaviour
         }
         else if (isControl && Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene("Stage01");
+            SceneManager.LoadScene("Stage1");
         }
     }
     void ShowHowToPlay()
