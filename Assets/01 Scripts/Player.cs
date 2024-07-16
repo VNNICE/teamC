@@ -93,7 +93,6 @@ public class Player : MonoBehaviour
             {
                 isMove = false;
             }
-
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && onGround)
             {
