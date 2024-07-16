@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     bool blink = false;
     public bool onGame;
     public bool gameClear;
+    private bool saved = false;
 
     private string jsonPath;
 
@@ -103,6 +104,12 @@ public class GameController : MonoBehaviour
 
         }
     }
+    IEnumerator RecordClearTime() 
+    {
+        ClearRecords.inst.AddClearTime(float.Parse(timer.ToString("0.00")));
+        saved = true;
+        yield return null;
+    }
     
     private void CheckGameClearStatus()
     {
@@ -113,9 +120,23 @@ public class GameController : MonoBehaviour
                 gameClearText.enabled = true;
                 gameClearText.text = "Clear";
                 clearEffect.SetActive(true);
-
-                WriteClearRecord();
-
+                if (saved == false) 
+                {
+                    StartCoroutine(RecordClearTime());
+                }
+                
+                if (Input.GetKeyDown(KeyCode.Space)) 
+                {
+                    if (SceneManager.GetActiveScene().name == "Stage5")
+                    {
+                        SceneManager.LoadScene("Continue");
+                    }
+                    else 
+                    {
+                        GoNextStage();
+                    }
+                    
+                }
             }
             else if (!gameClear)
             {
@@ -135,7 +156,15 @@ public class GameController : MonoBehaviour
        UnityEngine.SceneManagement.Scene thisScene = SceneManager.GetActiveScene();
        SceneManager.LoadScene(thisScene.name);
     }
-    private void WriteClearRecord()
+    public void GoNextStage()
     {
+        string nowStage = SceneManager.GetActiveScene().name;
+        int stageNumber = int.Parse(nowStage.Substring(nowStage.Length - 1)[0].ToString());
+        SceneManager.LoadScene("Stage" + (stageNumber + 1));
+    }
+    
+    public void CreateJson()
+    {
+        ClearRecords.inst.RecordClearTime();
     }
 }
