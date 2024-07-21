@@ -28,11 +28,40 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
         weightedMode: 0
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.33333334
         value: 580
+=======
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Color.a
+    path: 2/Thief
+    classID: 212
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1337.3506
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2
+        value: 665
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -53,7 +82,11 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
         value: -89.99988
+=======
+        value: -99.3504
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -61,8 +94,43 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
         time: 0.33333334
         value: -89.99988
+=======
+        time: 2
+        value: -839
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_AnchoredPosition.x
+    path: 2/Thief
+    classID: 224
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 688.9998
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2
+        value: 123
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -344,7 +412,11 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
       path: 1394905989
+=======
+      path: 2752130339
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
       attribute: 1460864421
       script: {fileID: 0}
       typeID: 224
@@ -389,7 +461,11 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
       path: 1394905989
+=======
+      path: 2620834081
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
@@ -398,6 +474,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
       path: 1394905989
       attribute: 538195251
       script: {fileID: 0}
@@ -426,6 +503,9 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 699707888
+=======
+      path: 3370285297
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
       attribute: 1460864421
       script: {fileID: 0}
       typeID: 224
@@ -466,11 +546,40 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
         weightedMode: 0
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.33333334
         value: 580
+=======
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Color.a
+    path: 2/Thief
+    classID: 212
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1337.3506
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2
+        value: 665
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -491,7 +600,11 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
         value: -89.99988
+=======
+        value: -99.3504
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -499,8 +612,43 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
+<<<<<<< HEAD:Assets/02 Material/Title/Title_UIAnimation.anim
         time: 0.33333334
         value: -89.99988
+=======
+        time: 2
+        value: -839
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_AnchoredPosition.x
+    path: 2/Thief
+    classID: 224
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 688.9998
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2
+        value: 123
+>>>>>>> parent of 55ceca2 (0717):Assets/01 Scripts/Title/UI_Move1.anim
         inSlope: 0
         outSlope: 0
         tangentMode: 136

@@ -2031,6 +2031,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 970183230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!1 &696640340
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,6 +2241,8 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+=======
+>>>>>>> parent of 55ceca2 (0717)
 --- !u!1 &700062936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,7 +2367,11 @@ Transform:
   m_GameObject: {fileID: 700062936}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 23.33, y: 6.69, z: 0}
+=======
+  m_LocalPosition: {x: 24.86, y: 6.69, z: 0}
+>>>>>>> parent of 55ceca2 (0717)
   m_LocalScale: {x: 2, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5739,7 +5746,11 @@ Transform:
   m_GameObject: {fileID: 1810807993}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: -22.677, y: 6.81, z: 0}
+=======
+  m_LocalPosition: {x: -24.18, y: 6.81, z: 0}
+>>>>>>> parent of 55ceca2 (0717)
   m_LocalScale: {x: 2, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6583,8 +6594,17 @@ SceneRoots:
   - {fileID: 713465475}
   - {fileID: 50138368}
   - {fileID: 2091430585}
+<<<<<<< HEAD
   - {fileID: 1599565179}
   - {fileID: 1695120156}
   - {fileID: 1286306086}
   - {fileID: 970183230}
   - {fileID: 1894133682}
+=======
+  - {fileID: 1286306086}
+  - {fileID: 1621833483}
+  - {fileID: 504071082}
+  - {fileID: 1379303561}
+  - {fileID: 1601951774}
+  - {fileID: 452821829}
+>>>>>>> parent of 55ceca2 (0717)

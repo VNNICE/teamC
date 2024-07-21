@@ -31,9 +31,24 @@ public class TitileManager : MonoBehaviour
     }
     private void Update()
     {
+<<<<<<< HEAD
         animator.SetBool("EffectEnd", effectEnd);
         ControlSettings();
         ShowCredits();
+=======
+        if (isControl && !onCredits && Input.GetKeyDown(KeyCode.Space))
+        {
+            ShowHowToPlay();
+        }
+        else if (isControl && !onHowToControl && Input.GetKeyDown(KeyCode.C))
+        {
+            ShowCredit();
+        }
+        else if (isControl && Input.GetKeyDown(KeyCode.Return))
+        {
+            SceneManager.LoadScene("Stage01");
+        }
+>>>>>>> parent of 55ceca2 (0717)
     }
 
     void ControlSettings()
