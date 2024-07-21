@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(rb.velocity.y);
         animator.SetBool("IsMove", isMove);
         animator.SetBool("OnGround", onGround);
         animator.SetFloat("VectorCheck", rb.velocity.y);
