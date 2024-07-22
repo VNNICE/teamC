@@ -33,6 +33,24 @@ public class Player : MonoBehaviour
 
     Rigidbody2D rb;
 
+    AudioSource mainAudioSource;
+    AudioSource subAudioSource;
+    [SerializeField] AudioClip triangleJumpSound;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip walkSound;
+
+    private void Awake()
+    {
+        mainAudioSource = GetComponent<AudioSource>();
+        subAudioSource = GetComponentInChildren<AudioSource>();
+        if (mainAudioSource && subAudioSource) 
+        {
+            subAudioSource.playOnAwake = false;
+            subAudioSource.loop = false;
+            mainAudioSource.playOnAwake = false;
+            mainAudioSource.loop = false;
+        }
+    }
     void Start()
     {
         Debug.Log(SceneManager.GetActiveScene().name);
@@ -77,6 +95,10 @@ public class Player : MonoBehaviour
             if (onMove && Input.GetKey(KeyCode.A) && !detectedLeft)
             {
                 //移動を押した時加速を初期化(三角飛び中など)
+                if (!mainAudioSource.isPlaying) 
+                {
+                    mainAudioSource.PlayOneShot(walkSound);
+                }
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 spriteRenderer.flipX = false;
                 transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
@@ -84,6 +106,10 @@ public class Player : MonoBehaviour
             }
             else if (onMove && Input.GetKey(KeyCode.D) && !detectedRight)
             {
+                if (!mainAudioSource.isPlaying)
+                {
+                    mainAudioSource.PlayOneShot(walkSound);
+                }
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 spriteRenderer.flipX = true;
                 transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
@@ -97,17 +123,18 @@ public class Player : MonoBehaviour
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && onGround)
             {
+                subAudioSource.PlayOneShot(jumpSound);
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             }//Triangle Jump
             else if (canTriangleJump && Input.GetKeyDown(KeyCode.Space) && !onGround && detectedLeft && !detectedRight)
             {
-                //spriteRenderer.flipX = true;
+                subAudioSource.PlayOneShot(triangleJumpSound);
                 rb.velocity = angleRT * triangleJumpForce;
                 StartCoroutine(WaitTriangleJump());
             }
             else if (canTriangleJump && Input.GetKeyDown(KeyCode.Space) && !onGround && !detectedLeft && detectedRight)
             {
-                //spriteRenderer.flipX = true;
+                subAudioSource.PlayOneShot(triangleJumpSound);
                 rb.velocity = angleLT * triangleJumpForce;
                 StartCoroutine(WaitTriangleJump());
             }
@@ -124,6 +151,12 @@ public class Player : MonoBehaviour
         }
 
     }
+    /*
+    IEnumerator RunningSound() 
+    {
+        audioSource.PlayOneShot(walkSound);
+        yield return new WaitForSeconds(0.5f);
+    }*/
 
     //三角飛び後すぐの方向転換を防ぐ
     IEnumerator WaitTriangleJump()

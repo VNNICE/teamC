@@ -1,30 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitileManager : MonoBehaviour
 {
-    
     [SerializeField] GameObject titleEffect;
     [SerializeField] GameObject titleUI;
-    [SerializeField] GameObject howToControl;
-    [SerializeField] GameObject credits;  
+    [SerializeField] GameObject howToPlay;
+    [SerializeField] GameObject credits;
+    [SerializeField] GameObject mainCamera;
 
     Animator animator;
-    bool onHowToControl;
+    AudioSource audioSource;
+    AudioSource howToPlayAudioSource;
+    [SerializeField] AudioClip buttonSound;
+    [SerializeField] AudioClip startSound;
+    [SerializeField] AudioClip howToPlayToTitleSound;
+    [SerializeField] AudioClip howToPlayBGM;
+
+    bool onHowToPlay;
     bool onCredits;
     public bool effectEnd = false;
     public bool canControl = false;
-
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        howToPlayAudioSource = howToPlay.GetComponent<AudioSource>();
+        //自動再生及び繰り返しを防止
+        if (audioSource && howToPlayAudioSource) 
+        {
+            howToPlayAudioSource.playOnAwake = false;
+            howToPlayAudioSource.loop = false;
+            audioSource.playOnAwake = false;
+            audioSource.loop = true;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+
         titleUI.SetActive(false);
-        onHowToControl = false;
+        onHowToPlay = false;
         onCredits = false;
-        howToControl.SetActive(false);
+        howToPlay.SetActive(false);
         credits.SetActive(false);
         
         animator.enabled = true;
@@ -33,55 +54,78 @@ public class TitileManager : MonoBehaviour
     {
         animator.SetBool("EffectEnd", effectEnd);
         ControlSettings();
-        ShowCredits();
     }
 
     void ControlSettings()
     {
         if (canControl && Input.GetKeyDown(KeyCode.Space) && !onCredits) 
         {
-            onHowToControl = !onHowToControl;
-            Debug.Log("onHowToControl: " + onHowToControl);
+            onHowToPlay = !onHowToPlay;
+            ShowHowToControl();
+            Debug.Log("onHowToControl: " + onHowToPlay);
         }
 
-        if (canControl && Input.GetKeyDown(KeyCode.C) && !onHowToControl)
+        if (canControl && Input.GetKeyDown(KeyCode.C) && !onHowToPlay)
         {
             onCredits = !onCredits;
+            ShowCredits();
             Debug.Log("onCredits: " + onCredits);
         }
 
-        if (canControl && Input.GetKeyDown(KeyCode.Return) && !onCredits && !onHowToControl)
+        if (canControl && Input.GetKeyDown(KeyCode.Return) && !onCredits && !onHowToPlay)
         {
-            SceneManager.LoadScene("Stage1");
+            StartCoroutine(WaitForStartSoundEnd());
         }
-        ShowHowToControl();
     }
 
     void ShowHowToControl() 
     {
-        if (onHowToControl)
+        
+        Debug.Log("ShowHowToControl - titleUI active: " + titleUI.activeSelf);
+        if (onHowToPlay)
         {
-            titleUI.SetActive(false);
-            howToControl.SetActive(true);
+            //audioSource.PlayOneShot(buttonSound);
+            
+            StartCoroutine(WaitForButtonSound());
+
         }
-        else 
+        else if(!onHowToPlay)
         {
-            howToControl.SetActive(false);
+            audioSource.PlayOneShot(howToPlayToTitleSound);
+            howToPlay.SetActive(false);
             titleUI.SetActive(true);
+            audioSource.Play();
         }
     }
     void ShowCredits()
     {
+        audioSource.PlayOneShot(buttonSound);
         if (onCredits)
         {
             titleUI.SetActive(false);
             credits.SetActive(true);
         }
-        else
+        else if(!onCredits)
         {
             credits.SetActive(false);
             titleUI.SetActive(true);
         }
+    }
+    IEnumerator WaitForStartSoundEnd()
+    {
+        audioSource.PlayOneShot(startSound);
+        yield return new WaitForSeconds(startSound.length);
+        SceneManager.LoadScene("Stage1");
+    }
+
+    IEnumerator WaitForButtonSound()
+    {
+        audioSource.PlayOneShot(buttonSound);
+        yield return new WaitForSeconds(buttonSound.length);
+        titleUI.SetActive(false);
+        howToPlay.SetActive(true);
+        audioSource.Stop();
+        howToPlayAudioSource.Play();
     }
 
     //アニメーションイベントで起動させています。
@@ -89,6 +133,7 @@ public class TitileManager : MonoBehaviour
     {
         effectEnd = true;
         titleUI.SetActive(true);
+        audioSource.Play();
         Debug.Log(effectEnd);
     }
 
