@@ -5,23 +5,37 @@ using UnityEngine.SceneManagement;
 
 public class TitileManager : MonoBehaviour
 {
-    bool isControl;
-    [SerializeField] GameObject titleObjects;
+    
+    [SerializeField] GameObject titleEffect;
+    [SerializeField] GameObject titleUI;
     [SerializeField] GameObject howToControl;
+    [SerializeField] GameObject credits;  
+
+    Animator animator;
     bool onHowToControl;
-    [SerializeField] GameObject credits;
     bool onCredits;
+    public bool effectEnd = false;
+    public bool canControl = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        titleUI.SetActive(false);
         onHowToControl = false;
         onCredits = false;
         howToControl.SetActive(false);
         credits.SetActive(false);
-        StartCoroutine(WaitLoading());
+        
+        animator.enabled = true;
     }
     private void Update()
     {
+<<<<<<< HEAD
+        animator.SetBool("EffectEnd", effectEnd);
+        ControlSettings();
+        ShowCredits();
+=======
         if (isControl && !onCredits && Input.GetKeyDown(KeyCode.Space))
         {
             ShowHowToPlay();
@@ -34,42 +48,67 @@ public class TitileManager : MonoBehaviour
         {
             SceneManager.LoadScene("Stage01");
         }
+>>>>>>> parent of 55ceca2 (0717)
     }
-    void ShowHowToPlay()
+
+    void ControlSettings()
     {
-        if (!onHowToControl)
+        if (canControl && Input.GetKeyDown(KeyCode.Space) && !onCredits) 
         {
-            onHowToControl = true;
-            titleObjects.SetActive(false);
+            onHowToControl = !onHowToControl;
+            Debug.Log("onHowToControl: " + onHowToControl);
+        }
+
+        if (canControl && Input.GetKeyDown(KeyCode.C) && !onHowToControl)
+        {
+            onCredits = !onCredits;
+            Debug.Log("onCredits: " + onCredits);
+        }
+
+        if (canControl && Input.GetKeyDown(KeyCode.Return) && !onCredits && !onHowToControl)
+        {
+            SceneManager.LoadScene("Stage01");
+        }
+        ShowHowToControl();
+    }
+
+    void ShowHowToControl() 
+    {
+        if (onHowToControl)
+        {
+            titleUI.SetActive(false);
             howToControl.SetActive(true);
         }
         else 
         {
-            onHowToControl = false;
             howToControl.SetActive(false);
-            titleObjects.SetActive(true);
+            titleUI.SetActive(true);
         }
     }
-    void ShowCredit()
+    void ShowCredits()
     {
-        if (!onCredits)
+        if (onCredits)
         {
-            onCredits = true;
-            titleObjects.SetActive(false);
+            titleUI.SetActive(false);
             credits.SetActive(true);
         }
         else
         {
-            onCredits = false;
             credits.SetActive(false);
-            titleObjects.SetActive(true);
+            titleUI.SetActive(true);
         }
     }
-    private IEnumerator WaitLoading() 
+
+    //アニメーションイベントで起動させています。
+    void OnTitleEffectEnd()
     {
-        yield return new WaitForSeconds(3);
-        isControl = true;
-        StopCoroutine(WaitLoading());
+        effectEnd = true;
+        titleUI.SetActive(true);
+        Debug.Log(effectEnd);
     }
 
+    void ActiveControl() 
+    {
+        canControl = true;
+    }
 }
